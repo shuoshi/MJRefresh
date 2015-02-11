@@ -15,7 +15,6 @@
 @interface  MJRefreshBaseView()
 {
     __weak UILabel *_statusLabel;
-    __weak UIImageView *_arrowImage;
     __weak UIActivityIndicatorView *_activityView;
     BOOL _endingRefresh;
 }
@@ -41,30 +40,22 @@
 }
 
 /**
- *  箭头图片
- */
-- (UIImageView *)arrowImage
-{
-    if (!_arrowImage) {
-        UIImageView *arrowImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:MJRefreshSrcName(@"arrow.png")]];
-        arrowImage.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        [self addSubview:_arrowImage = arrowImage];
-    }
-    return _arrowImage;
-}
-
-/**
  *  状态标签
  */
 - (UIActivityIndicatorView *)activityView
 {
     if (!_activityView) {
         UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activityView.bounds = self.arrowImage.bounds;
-        activityView.autoresizingMask = self.arrowImage.autoresizingMask;
+        activityView.bounds = self.bounds;
+        activityView.autoresizingMask = self.autoresizingMask;
         [self addSubview:_activityView = activityView];
     }
     return _activityView;
+}
+
+- (void)setStyle:(UIActivityIndicatorViewStyle)style
+{
+    _activityView.activityIndicatorViewStyle = style;
 }
 
 #pragma mark - 初始化方法
@@ -85,12 +76,7 @@
 {
     [super layoutSubviews];
     
-    // 1.箭头
-    CGFloat arrowX = self.mj_width * 0.5 - 100;
-    self.arrowImage.center = CGPointMake(arrowX, self.mj_height * 0.5);
-    
-    // 2.指示器
-    self.activityView.center = self.arrowImage.center;
+    self.activityView.center = self.center;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -237,8 +223,8 @@
                     self.activityView.alpha = 1.0;
                 }];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJRefreshSlowAnimationDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{ // 等头部回去
-                    // 显示箭头
-                    self.arrowImage.hidden = NO;
+                    // 显示状态文字
+                    self.statusLabel.hidden = NO;
                     
                     // 停止转圈圈
                     [self.activityView stopAnimating];
@@ -252,8 +238,8 @@
                 // 直接返回
                 return;
             } else {
-                // 显示箭头
-                self.arrowImage.hidden = NO;
+                // 显示状态文字
+                self.statusLabel.hidden = NO;
                 
                 // 停止转圈圈
                 [self.activityView stopAnimating];
@@ -268,8 +254,8 @@
         {
             // 开始转圈圈
 			[self.activityView startAnimating];
-            // 隐藏箭头
-			self.arrowImage.hidden = YES;
+            // 隐藏状态文字
+            self.statusLabel.hidden = YES;
             
             // 回调
             if ([self.beginRefreshingTaget respondsToSelector:self.beginRefreshingAction]) {

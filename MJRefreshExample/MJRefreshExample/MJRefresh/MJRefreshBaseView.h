@@ -33,8 +33,7 @@ typedef enum {
 
 #pragma mark - 内部的控件
 @property (nonatomic, weak, readonly) UILabel *statusLabel;
-@property (nonatomic, weak, readonly) UIImageView *arrowImage;
-@property (nonatomic, weak, readonly) UIActivityIndicatorView *activityView;
+@property (nonatomic, weak) UIActivityIndicatorView *activityView;
 
 #pragma mark - 回调
 /**
@@ -75,4 +74,5 @@ typedef enum {
 @property (copy, nonatomic) NSString *pullToRefreshText;
 @property (copy, nonatomic) NSString *releaseToRefreshText;
 @property (copy, nonatomic) NSString *refreshingText;
+@property (nonatomic, assign) UIActivityIndicatorViewStyle style;
 @end

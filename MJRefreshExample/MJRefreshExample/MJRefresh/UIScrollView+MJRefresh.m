@@ -289,4 +289,15 @@ static char MJRefreshFooterViewKey;
 {
     return self.header.refreshingText;
 }
+
+- (UIActivityIndicatorViewStyle)style
+{
+    return self.header.style;
+}
+
+- (void)setStyle:(UIActivityIndicatorViewStyle)style
+{
+    self.header.style = style;
+    self.footer.style = style;
+}
 @end

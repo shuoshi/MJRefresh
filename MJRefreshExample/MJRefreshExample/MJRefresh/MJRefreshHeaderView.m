@@ -64,18 +64,12 @@
     [super layoutSubviews];
     
     CGFloat statusX = 0;
-    CGFloat statusY = 0;
+    CGFloat statusY = self.mj_height/4;
     CGFloat statusHeight = self.mj_height * 0.5;
     CGFloat statusWidth = self.mj_width;
     // 1.状态标签
     self.statusLabel.frame = CGRectMake(statusX, statusY, statusWidth, statusHeight);
-    
-    // 2.时间标签
-    CGFloat lastUpdateY = statusHeight;
-    CGFloat lastUpdateX = 0;
-    CGFloat lastUpdateHeight = statusHeight;
-    CGFloat lastUpdateWidth = statusWidth;
-    self.lastUpdateTimeLabel.frame = CGRectMake(lastUpdateX, lastUpdateY, lastUpdateWidth, lastUpdateHeight);
+    self.activityView.center = self.statusLabel.center;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -192,7 +186,7 @@
         {
             // 刷新完毕
             if (MJRefreshStateRefreshing == oldState) {
-                self.arrowImage.transform = CGAffineTransformIdentity;
+                //self.arrowImage.transform = CGAffineTransformIdentity;
                 // 保存刷新时间
                 self.lastUpdateTime = [NSDate date];
                 
@@ -209,7 +203,7 @@
             } else {
                 // 执行动画
                 [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                    self.arrowImage.transform = CGAffineTransformIdentity;
+                    //self.arrowImage.transform = CGAffineTransformIdentity;
                 }];
             }
 			break;
@@ -219,7 +213,7 @@
         {
             // 执行动画
             [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+                //self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
             }];
 			break;
         }

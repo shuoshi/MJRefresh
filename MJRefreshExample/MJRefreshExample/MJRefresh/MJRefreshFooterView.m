@@ -37,6 +37,7 @@
     [super layoutSubviews];
     
     self.statusLabel.frame = self.bounds;
+    self.activityView.center = self.statusLabel.center;
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -135,14 +136,14 @@
         {
             // 刷新完毕
             if (MJRefreshStateRefreshing == oldState) {
-                self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+                //self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
                 [UIView animateWithDuration:MJRefreshSlowAnimationDuration animations:^{
                     self.scrollView.mj_contentInsetBottom = self.scrollViewOriginalInset.bottom;
                 }];
             } else {
                 // 执行动画
                 [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                    self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
+                    //self.arrowImage.transform = CGAffineTransformMakeRotation(M_PI);
                 }];
             }
             
@@ -158,7 +159,7 @@
 		case MJRefreshStatePulling:
         {
             [UIView animateWithDuration:MJRefreshFastAnimationDuration animations:^{
-                self.arrowImage.transform = CGAffineTransformIdentity;
+                //self.arrowImage.transform = CGAffineTransformIdentity;
             }];
 			break;
         }
